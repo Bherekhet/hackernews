@@ -8,53 +8,76 @@ import '../models/news.dart';
 
 class ApiProvider with ChangeNotifier {
   String baseUrl = Constants.baseUrl;
+
   List<int> topStoriesId = [];
   List<News> _news = [];
+  Map<int, News> _cached = {};
+  int currentPage = 20;
 
   List<News> get news {
+    _sortNewBasedOnTime();
     return [..._news];
   }
 
-  void fetchStoriesIds(String ePoint) async {
+  Map<int, News> get cachedNews {
+    return {..._cached};
+  }
+
+  void _sortNewBasedOnTime() {
+    _cached.values.toList().sort((a, b) => b.time.compareTo(a.time));
+    // _news.sort((a, b) => b.time.compareTo(a.time));
+  }
+
+  Future<bool> fetchStoriesIds(String ePoint) async {
+    currentPage = 20;
+    topStoriesId = [];
     _news = [];
-    String endPoint = ePoint+'.json';
+    String endPoint = ePoint + '.json';
     try {
-      final response = await http.get(baseUrl+endPoint);
-      // final responseData = response.body;
+      final response = await http.get(baseUrl + endPoint);
       final responseData = jsonDecode(response.body);
-      //print('true');
       topStoriesId = responseData.cast<int>();
 
-      _fetchStoresForIds(topStoriesId);
-    } catch(error) {
+      fetchStoresForIds();
+    } catch (error) {
       print('error from new stories $error');
+      Future.value(false);
+    }
+    return Future.value(true);
+  }
+
+  void fetchStoresForIds() {
+    //print('currentPage $currentPage and length ${topStoriesId.length}');
+    if (currentPage < topStoriesId.length-20) {
+      for (int i = 0; i < 20; i++) {
+        print('current page confused $currentPage');
+        _fetchStores(topStoriesId[currentPage + i]);
+
+        // if (!_cached.containsKey(topStoriesId[currentPage + i])) {
+        // }
+      }
+      currentPage += 20;
+    } else {
+      print('ooops');
     }
   }
 
-  void _fetchStoresForIds(List<int> idList) {
-    idList.forEach((id) {
-      _fetchStores(id);
-    });
-  }
-
-  void _fetchStores(int id) async{
+  void _fetchStores(int id) async {
     String endPoint = Constants.tItemEndPoint + '$id.json';
+    //print('check for id $id');
 
     try {
-      final response = await http.get(baseUrl+endPoint);
-      if(response.statusCode == 200) {
-        //print('test');
-        print(response.body);
-        _news.add(News.fromJson(jsonDecode(response.body)));
+      final response = await http.get(baseUrl + endPoint);
+      if (response.statusCode == 200) {
+        //_news.add(News.fromJson(jsonDecode(response.body)));
+        _cached.putIfAbsent(id, () => News.fromJson(jsonDecode(response.body)));
       } else {
         print(response.statusCode);
       }
-
-    } catch(error) {
+    } catch (error) {
       print('error from fetching item story $error');
     }
 
     notifyListeners();
   }
-
 }

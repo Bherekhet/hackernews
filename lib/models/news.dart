@@ -11,7 +11,7 @@ class News {
   int comment;
   int score;
 
-  News({this.id, this.title, this.url, this.deleted, this.by, this.dead, this.type, this.time, this.comment, this.score});
+  News({this.id, this.title, this.url, this.deleted, this.by, this.dead, this.type, this.time, this.comment, this.score,});
 
   factory News.fromJson(Map<String, dynamic> fromJson) {
     return News(

@@ -26,6 +26,7 @@ class NewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('$id, $comment, $title, $score, $by, $time, $url');
     return GestureDetector(
       onTap: () {
         Navigator.push(

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 
 import '../constants.dart' as Constants;
 import '../models/news.dart';
@@ -70,7 +69,5 @@ class ApiProvider with ChangeNotifier {
 
     notifyListeners();
   }
-
-  // src: https://stackoverflow.com/questions/50632217/dart-flutter-converting-timestamp
  
 }

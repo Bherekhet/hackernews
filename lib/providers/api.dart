@@ -1,7 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 import '../constants.dart' as Constants;
 import '../models/news.dart';
@@ -23,7 +23,6 @@ class ApiProvider with ChangeNotifier {
   }
 
   void fetchStoriesIds(String ePoint) async {
-    print(ePoint);
     currentPage = 0;
     topStoriesId = [];
     _cached.clear();
@@ -32,7 +31,6 @@ class ApiProvider with ChangeNotifier {
       final response = await http.get(baseUrl + endPoint);
       final responseData = jsonDecode(response.body);
       topStoriesId = responseData.cast<int>();
-      print(responseData.length);
       fetchStoresForIds();
     } catch (error) {
       print('error from new stories $error');
@@ -44,7 +42,6 @@ class ApiProvider with ChangeNotifier {
     //print('currentPage $currentPage and length ${topStoriesId.length}');
     if (currentPage < topStoriesId.length) {
       for (int i = 0; i < 20; i++) {
-        print('current page confused $currentPage');
         _fetchStores(topStoriesId[currentPage + i]);
 
         // if (!_cached.containsKey(topStoriesId[currentPage + i])) {
@@ -73,4 +70,7 @@ class ApiProvider with ChangeNotifier {
 
     notifyListeners();
   }
+
+  // src: https://stackoverflow.com/questions/50632217/dart-flutter-converting-timestamp
+ 
 }

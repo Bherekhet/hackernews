@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants.dart' as Constants;
+import 'package:time_formatter/time_formatter.dart';
 import '../screens/webview_screen.dart';
 
 class NewItem extends StatelessWidget {
@@ -25,10 +26,8 @@ class NewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('$id, $comment, $title, $score, $by, $time, $url');
     return GestureDetector(
       onTap: () {
-        print('true');
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -61,7 +60,7 @@ class NewItem extends StatelessWidget {
                 ),
           title: Text('$title'),
           subtitle: Text(
-              '$score points by $by ${DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(time * 1000))} minutes ago'),
+              '$score points by $by ${formatTime(time*1000)}'),
         ),
       ),
     );

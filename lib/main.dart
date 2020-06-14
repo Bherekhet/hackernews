@@ -11,9 +11,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MultiProvider(
+    return  MultiProvider(
         providers: [
           ChangeNotifierProvider.value(value: ApiProvider()),
         ],
@@ -21,7 +19,6 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           home: NewsScreen(),
         ),
-      ),
-    );
+      );
   }
 }

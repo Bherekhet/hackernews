@@ -1,4 +1,3 @@
-
 class News {
   int id;
   String title;

@@ -1,16 +1,17 @@
-# hn_app
 
-A new Flutter project.
+# HackerNews App
 
-## Getting Started
+A Dart "hackernews Android and iOS" application built using Flutter.
 
-This project is a starting point for a Flutter application.
+# What I Learned
 
-A few resources to get you started if this is your first Flutter project:
+* Used HackerNews API https://github.com/HackerNews/API
+* Implemented Lazy loading with Scroll Controller
+* Used top navigation bar to switch between different stories
+* Used Webview package to load hacker news stories 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+# Screenshots
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<p align="center">
+  
+</p>
